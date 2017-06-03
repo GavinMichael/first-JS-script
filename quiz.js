@@ -7,6 +7,12 @@ var questionArray = [
 "What used to advertise its products as 'Fingerlickin good'?"
 ];
 
+var q1 = "What falling object is said to have inspired Isaac Newton's theories about gravity?";
+var q2 = "What color is a NYC taxi?";
+var q3 = "Where in the world does the largest tropical rainforest grow?";
+var q4 = "In which country do the famous pyramids of Giza stand?";
+var q5 = "What used to advertise its products as 'Fingerlickin good'?";
+
 //All the answers live here
 var answerArray = [
 "Apple",
@@ -16,99 +22,157 @@ var answerArray = [
 "KFC"
 ];
 
-//The count to keep track of the correct asnwers
-var correctAnswerCount = 0;
+var a1 = "apple";
+var a2 = "yellow";
+var a3 = "amazon";
+var a4 = "egypt";
+var a5 = "kfc";
 
-//used to display how many questions are left
-var questionsLeft;
+//all the ids that are modified
+var actionArea_page = document.getElementById('actionArea');
+var question_page = document.getElementById('question');
+var questionsLeft_page = document.getElementById('questionsLeft');
+var submitBtn_page = document.getElementById('submitBtn');
+var textBox = document.getElementById('userAnswer');
+var outcome_page = document.getElementById('outcome');
+var resultText = document.getElementById('gameResults');
 
-
-//This is called when the Play Button is clicked
 function startGame() {
-
-	//false exists this function
-	if (confirm('Want to play the game?') == true) {
-		
-		//resetting the counter to 0 so that if the player tries agian, it would refresh the count of correct answers
-		correctAnswerCount = 0;
-
-		//calling ask question function which is where all the meat is 
-		askQuestion();
-
-		//called to display a message based on the correctAnswerCount
-		gameComplete();
-
-		//changes the text of the 'Play' btn to 'Replay'
-		document.getElementById('gameTrigger').innerHTML = 'Replay';
-	}
+	resultText.style.display = 'none';
+	resultText.innerHTML = '';
+	actionArea_page.style.display = 'block';
+	gameTrigger.style.display = 'none';
+	displayQuestion();
 }
 
-function askQuestion() {
-	
-	/*
-	- Loops through the array and spits out each question to the user
-	- The index of the question asked is also given to check the answer on answerArray
-	- element => Question
-	- index => index of the current element
-	- array => to check the len so that the no of remaining questions can be calculated
-	*/
-	questionArray.forEach(function(element, index, array) {
+var questionCounter = 1;
+var correctAnswers = 0;
 
-		//questions left == array.len - current index
-		questionsLeft = array.length - index;
+function displayQuestion() {
+	//reset the yes correct/ no incorrect text
+	//outcome.innerHTML = "";
 
-		//each element is a question
-		//ask each question from the user
-		var userResponse = prompt(element.toString() + ' [' + questionsLeft + ' questions left]');
-
-
-		if (userResponse === "") {																																							//if user input is empty
-			alert('It\'s ok! The correct answer is ' + answerArray[index]);
-		} else if (userResponse.toLowerCase() === answerArray[index].toLowerCase()) {														//if user input matches the answer in answerArray[index]
-			alert('Yes, that is correct!');
-			correctAnswerCount++;
-		} else if (userResponse.toLowerCase() !== answerArray[index].toLowerCase()){														//if user input is incorrect
-			alert('No, that was incorrect! The correct answer is ' + answerArray[index]);
-		}
-
-	});
-
-	//display the total correct answers at the end
-	alert('You got ' + correctAnswerCount + ' questions correct');
-
-}																																																						//End of askQuestion()
-
-//Displays a message based on the correctAnswerCount
-function gameComplete() {
-
-	/*
-		=> 5 / 5 
-		=> 4,3 / 5
-		=> 2,1 / 5
-		=> 0 / 5
-	*/
-	var targetP = document.getElementById('completed');
-
-	switch(correctAnswerCount) {
-		case 5:
-			targetP.innerHTML = '😆 <br>5 / 5 <br> Good Job!';
-			break;
-
-		case 4:
-		case 3:
-			targetP.innerHTML = '😊 <br>' + correctAnswerCount + ' /5' + '<br> Not bad';
+	switch (questionCounter){
+		case 1:
+			question_page.innerHTML = q1;
+			questionsLeft.innerHTML = (5 - questionCounter) + ' Questions Left' ;
 			break;
 
 		case 2:
-		case 1:
-			targetP.innerHTML = '😖 <br>' + correctAnswerCount + ' /5' + '<br> Not bad';
+			question_page.innerHTML = q2;
+			questionsLeft.innerHTML = (5 - questionCounter) + ' Questions Left' ;
 			break;
 
-		case 0:
-			targetP.innerHTML = '😐 <br>' + correctAnswerCount + ' /5' + '<br> Boo!';
+		case 3:
+			question_page.innerHTML = q3;
+			questionsLeft.innerHTML = (5 - questionCounter) + ' Questions Left' ;
 			break;
 
-		default:
+		case 4:
+			question_page.innerHTML = q4;
+			questionsLeft.innerHTML = (5 - questionCounter) + ' Questions Left' ;
+			break;
+
+		case 5:
+			question_page.innerHTML = q5;
+			questionsLeft.innerHTML = 'Last Question' ;
+			break;
+
+		case 6:
+			gameComplete();
 			break;
 	}
+}
+
+
+var txtBoxAnswer;
+
+function ansSubmit() {
+	txtBoxAnswer = textBox.value.toLowerCase();
+	checkAnswer();
+}
+
+function checkAnswer() {
+	if (txtBoxAnswer === "") {
+		outcome_page.innerHTML = 'Answer to continue';
+	} else {
+		switch(questionCounter) {
+			case 1:
+				if (txtBoxAnswer === a1) {
+					outcome_page.innerHTML = "Yes, that\'s correct";
+					correctAnswers++;
+				} else if (txtBoxAnswer !== a1) {
+					outcome_page.innerHTML = "<span class='wrong-answer'>No, that\'s incorrect</span>";
+				};
+				break;
+
+			case 2:
+				if (txtBoxAnswer === a2) {
+					outcome_page.innerHTML = "Yes, that\'s correct";
+					correctAnswers++;
+				} else if (txtBoxAnswer !== a2) {
+					outcome_page.innerHTML = "<span class='wrong-answer'>No, that\'s incorrect</span>";
+				};
+				break;
+
+			case 3:
+				if (txtBoxAnswer === a3) {
+					outcome_page.innerHTML = "Yes, that\'s correct";
+					correctAnswers++;
+				} else if (txtBoxAnswer !== a3) {
+					outcome_page.innerHTML = "<span class='wrong-answer'>No, that\'s incorrect</span>";
+				};
+				break;
+
+			case 4:
+				if (txtBoxAnswer === a4) {
+					outcome_page.innerHTML = "Yes, that\'s correct";
+					correctAnswers++;
+				} else if (txtBoxAnswer !== a4) {
+					outcome_page.innerHTML = "<span class='wrong-answer'>No, that\'s incorrect</span>";
+				};
+				break;
+
+			case 5:
+				if (txtBoxAnswer === a5) {
+					outcome_page.innerHTML = "Yes, that\'s correct";
+					correctAnswers++;
+				} else if (txtBoxAnswer !== a5) {
+					outcome_page.innerHTML = "<span class='wrong-answer'>No, that\'s incorrect</span>";
+				};
+				break;
+		}
+		questionCounter++;
+		userAnswer.value = '';
+		displayQuestion();
+	}
+}
+
+function gameComplete() {
+	//resetting stuff
+	evalScore();
+	actionArea.style.display = 'none';
+	gameTrigger.style.display = 'inline-block';
+	gameTrigger.innerHTML = 'Replay?';
+	questionCounter = 1;
+	correctAnswers = 0;
+	outcome_page.innerHTML = '';
+}
+
+function evalScore() {
+	resultText.style.display = 'block';
+	resultText.innerHTML = '';
+
+	if (correctAnswers === 5) {
+		console.log(correctAnswers);
+		resultText.innerHTML = "<span class='emj'>😆</span> <br>5 / 5 <br> Good Job!";
+	} else if (correctAnswers >= 3) {
+		resultText.innerHTML = "<span class='emj'>😊</span> <br>" + correctAnswers + " /5" + "<br> Not bad";
+	} else if (correctAnswers > 1) {
+		resultText.innerHTML = "<span class='emj'>😖</span> <br>" + correctAnswers + " /5" + "<br> Could do better";
+	} else if (correctAnswers === 0) {
+		resultText.innerHTML = "<span class='emj'>😐</span> <br>" + correctAnswers + " /5" + "<br> Boo!";
+	}
+
+	
 }
