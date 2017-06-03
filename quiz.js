@@ -168,7 +168,7 @@ function evalScore() {
 		resultText.innerHTML = "<span class='emj'>😆</span> <br>5 / 5 <br> Good Job!";
 	} else if (correctAnswers >= 3) {
 		resultText.innerHTML = "<span class='emj'>😊</span> <br>" + correctAnswers + " /5" + "<br> Not bad";
-	} else if (correctAnswers > 1) {
+	} else if (correctAnswers >= 1) {
 		resultText.innerHTML = "<span class='emj'>😖</span> <br>" + correctAnswers + " /5" + "<br> Could do better";
 	} else if (correctAnswers === 0) {
 		resultText.innerHTML = "<span class='emj'>😐</span> <br>" + correctAnswers + " /5" + "<br> Boo!";
